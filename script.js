@@ -1,6 +1,33 @@
+// Функция для отправки данных в Telegram
+function sendToTelegram(message) {
+  const botToken = '7692253790:AAHKWsC-lNlg_G9FYx282NUH7wvMLDslqH0'; // Вставьте токен вашего бота
+  const chatId = '639414462'; // Вставьте ID вашего канала/чата
+  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+  // Отправляем сообщение через Telegram API
+  fetch(telegramApiUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message,
+      parse_mode: 'HTML', // Позволяет использовать форматирование текста
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log('Сообщение успешно отправлено в Telegram');
+      } else {
+        console.error('Ошибка отправки сообщения в Telegram', response);
+      }
+    })
+    .catch((error) => {
+      console.error('Ошибка подключения к Telegram API', error);
+    });
+}
+
 // Функция для скрытия всей страницы (кроме логотипа и таблицы)
 function showResults() {
-  const container = document.querySelector('.container');
   const votingForm = document.getElementById('voting-form');
   const results = document.getElementById('results');
 
@@ -101,6 +128,18 @@ function generateResults() {
         </tr>`
     )
     .join('');
+
+  // Создаем сообщение для Telegram
+  const message = `<b>Таблица лидеров (Группа ${groupNumber})</b>\n` +
+    results
+      .map(
+        (result, index) =>
+          `${index + 1}. ${result.name} - ${result.totalScore} баллов`
+      )
+      .join('\n');
+
+  // Отправляем сообщение в Telegram
+  sendToTelegram(message);
 }
 
 // Добавляем обработчики событий
