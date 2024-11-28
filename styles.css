@@ -1,0 +1,142 @@
+/* Общий стиль для страницы */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-y: auto; /* Включаем прокрутку */
+  font-family: 'Montserrat', sans-serif;
+  background-color: #dbfe76; /* Фон страницы */
+}
+
+/* Контейнер */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Логотип */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header .logo {
+  max-width: 150px;
+  height: auto;
+}
+
+/* Заголовки */
+h1, h2 {
+  text-align: center;
+  color: #5988FF;
+  margin-bottom: 20px;
+}
+
+/* Заголовки секций (например, "Ученик 2") */
+.student-block h3 {
+  margin-bottom: 15px; /* Увеличенный отступ снизу */
+  font-size: 18px;
+  font-weight: bold;
+  color: #5988FF; /* Цвет заголовка */
+  text-transform: uppercase; /* Заглавные буквы */
+}
+
+/* Подписи к полям */
+label {
+  display: block;
+  margin-bottom: 10px; /* Отступ между текстом и полем */
+  font-weight: bold;
+  color: #333; /* Цвет подписи */
+}
+
+/* Поля ввода и выпадающие списки */
+input, select, button {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 15px; /* Отступ снизу */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+/* Кнопки */
+button {
+  background-color: #5988FF;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #FD98FB;
+}
+
+/* Блоки учеников */
+.student-block {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Для блока "Оценка за визуальную часть" */
+.visual-scores {
+  display: flex;
+  flex-wrap: wrap; /* Поля переносятся на новую строку */
+  gap: 10px; /* Расстояние между полями */
+  margin-top: 10px; /* Отступ сверху от заголовка */
+}
+
+.visual-scores input {
+  width: calc(20% - 10px); /* Поля занимают 20% ширины с учетом gap */
+  text-align: center; /* Центрируем текст в полях */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Блок с результатами */
+#results {
+  margin-top: 30px;
+}
+
+#results.hidden {
+  display: none;
+}
+
+/* Таблица лидеров */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #5988FF;
+  color: white;
+}
+
+td {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.hidden {
+  display: none; /* Полностью скрывает элемент */
+}
+
