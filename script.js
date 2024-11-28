@@ -1,7 +1,7 @@
 // Функция для отправки данных в Telegram
 function sendToTelegram(message) {
-  const botToken = '7692253790:AAHKWsC-lNlg_G9FYx282NUH7wvMLDslqH0'; // Вставьте токен вашего бота
-  const chatId = '639414462'; // Вставьте ID вашего канала/чата
+   const botToken = '7692253790:AAHKWsC-lNlg_G9FYx282NUH7wvMLDslqH0'; 
+  const chatId = '639414462'; 
   const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
   // Отправляем сообщение через Telegram API
@@ -88,7 +88,15 @@ function generateStudentBlocks() {
 // Функция для генерации результатов голосования
 function generateResults() {
   const groupNumber = document.getElementById('group-number').value;
+  const teacherName = document.getElementById('teacher-name').value;
   const studentBlocks = document.querySelectorAll('.student-block');
+  const currentDate = new Date().toLocaleString('ru-RU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }); // Форматирование даты
 
   const results = [];
   studentBlocks.forEach((block, index) => {
@@ -130,7 +138,10 @@ function generateResults() {
     .join('');
 
   // Создаем сообщение для Telegram
-  const message = `<b>Таблица лидеров (Группа ${groupNumber})</b>\n` +
+  const message = `<b>Таблица лидеров</b>\n` +
+    `Группа: ${groupNumber}\n` +
+    `Преподаватель: ${teacherName}\n` +
+    `Дата: ${currentDate}\n\n` +
     results
       .map(
         (result, index) =>
