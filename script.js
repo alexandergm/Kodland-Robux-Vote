@@ -85,34 +85,40 @@ function addInputListeners() {
   });
 }
 
+function calculateRankScore(rank, studentCount) {
+  const maxPoints = studentCount * 5; 
+  let rankScore = maxPoints;  
+  
+  for (let i = 2; i <= rank; i++) {
+    rankScore = rankScore = Math.floor(rankScore - rankScore * 0.2);
+  }
+
+  return Math.floor(rankScore); 
+}
+
 function generateResults() {
   if (!validateFields()) {
     alert('Заполните все обязательные поля!');
     return;
   }
 
-  const groupNumber = document.getElementById('group-number').value;
-  const teacherName = document.getElementById('teacher-name').value;
-  const studentBlocks = document.querySelectorAll('.student-block');
-  const currentDate = new Date().toLocaleString('ru-RU', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const studentCount = parseInt(document.getElementById('student-count').value, 10);
+  if (studentCount < 1) return;
 
+  const studentBlocks = document.querySelectorAll('.student-block');
   const results = [];
+
   studentBlocks.forEach((block, index) => {
     const name = block.querySelector(`input[name="student-name-${index + 1}"]`).value;
     const visualScores = block.querySelectorAll(`input[name^="visual-score-${index + 1}"]`);
     const visualScoreTotal = Array.from(visualScores).reduce((sum, input) => sum + parseInt(input.value || '0', 10), 0);
     const rank = parseInt(block.querySelector(`select[name="rank-${index + 1}"]`).value, 10);
 
-    const rankScore = rank === 1 ? 16 : rank === 2 ? 13 : rank === 3 ? 11 : rank === 4 ? 8 : rank === 5 ? 6 : 4;
+    const rankScore = calculateRankScore(rank, studentCount);
+
     const totalScore = visualScoreTotal + rankScore;
 
-    results.push({ name, totalScore });
+    results.push({ name, totalScore, rankScore });  
   });
 
   results.sort((a, b) => b.totalScore - a.totalScore);
@@ -124,17 +130,27 @@ function generateResults() {
   const resultsSection = document.getElementById('results');
   const leaderboard = document.getElementById('leaderboard').querySelector('tbody');
 
-  resultsSection.querySelector('h2').innerHTML = `Таблица лидеров (Группа ${groupNumber})`;
+  resultsSection.querySelector('h2').innerHTML = `Таблица лидеров (Группа)`;
 
   leaderboard.innerHTML = results
     .map(
       (result) =>
         `<tr>
           <td>${result.name}</td>
-          <td>${result.totalScore}</td>
+          <td>${result.totalScore} </td>
         </tr>`
     )
     .join('');
+
+  const groupNumber = document.getElementById('group-number').value;
+  const teacherName = document.getElementById('teacher-name').value;
+  const currentDate = new Date().toLocaleString('ru-RU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   const message = `<b>Таблица лидеров</b>\n` +
     `Группа: ${groupNumber}\n` +
